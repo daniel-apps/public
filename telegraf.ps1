@@ -26,10 +26,8 @@ foreach ($vm in $vms ){
   $size = 0
   foreach($vhd in $vhds){
     If($vhd.parentpath){
-      write-host "vhd parent" ($vhd.parentpath | Get-VHD).filesize
       $size += ($vhd.parentpath | Get-VHD).filesize
     }ELSE{
-      write-host "vhd" $vhd.filesize
       $size += $vhd.filesize
     }
   }
