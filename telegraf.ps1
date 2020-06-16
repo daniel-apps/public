@@ -14,7 +14,7 @@ Function Send-JsonOverTcp {
 }
 
 #Get VM Info
-$vms = Get-VM
+$vms = Get-VM | where {$_.state -eq "Running"}
 foreach ($vm in $vms ){
   $name = $vm.Name
   IF($vm.DynamicMemoryEnabled){
