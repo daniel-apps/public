@@ -33,7 +33,7 @@ foreach ($vm in $vms ){
       $size += $vhd.filesize
     }
   }
-  IF(Get-vmsnapshot -vmname $vm.name){$snaphot= "True"}ELSE{$snaphot = "False"}
+  IF(Get-vmsnapshot -vmname $vm.name){$snapshot= "True"}ELSE{$snapshot = "False"}
   $obj = New-Object PSObject -Property @{
     FriendlyName  = $name
     vCPU	        = $vm.ProcessorCount
