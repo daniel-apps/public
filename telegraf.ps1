@@ -40,7 +40,7 @@ foreach ($vm in $vms ){
     DiskCount     = $vm.HardDrives.count
     NICS          = $vm.NetworkAdapters.count
   }
-  $vmstats = $obj | Select-Object FriendlyName,vCPU,Memory,Disk | ConvertTo-Json
+  $vmstats = $obj | Select-Object FriendlyName,vCPU,Memory,DiskSize,DiskCount,NICS | ConvertTo-Json
    Send-JsonOverTcp 127.0.0.1 8094 "$vmstats"
    
   # VM Health & State
