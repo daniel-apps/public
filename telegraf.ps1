@@ -39,7 +39,7 @@ foreach ($vm in $vms ){
     vCPU	        = $vm.ProcessorCount
     Memory	      = ($memory)/1024/1024
     DiskSize	    = ($size)/1024/1024
-    DiskCount     = $vm.HardDiskDrives.count
+    DiskCount     = $vm.HardDrives.count
     NICS          = $vm.NetworkAdapters.count
   }
   $vmstats = $obj | Select-Object FriendlyName,vCPU,Memory,Disk | ConvertTo-Json
