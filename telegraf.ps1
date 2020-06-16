@@ -56,6 +56,6 @@ foreach ($vm in $vms ){
     
   }
   $vminfo = $obj | Select-Object FriendlyName,ReplicaHealth,ReplicaState,Snapshot,Heartbeat,State,Generation,IsClustered | ConvertTo-Json
-   Send-JsonOverTcp 127.0.0.1 8095 "$vminfo"
+   Send-JsonOverTcp 127.0.0.1 8094 "$vminfo"
 }
 
