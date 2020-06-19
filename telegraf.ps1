@@ -13,6 +13,10 @@ Function Send-JsonOverTcp {
     $Socket.Close()
 }
 
+# TO DO: optimize... 
+# This is a slow script, do not run more than every 2 minutes or so.
+# 
+
 #Get VM Info
 $vms = Get-VM | where {$_.state -eq "Running"}
 foreach ($vm in $vms ){
