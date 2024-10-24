@@ -1,3 +1,11 @@
+############################################################################################################
+# This script was written by Daniel Apps (Yes, ChatGPT did the heavy lifting :D )
+# Author: Daniel Apps
+# Date: 4/4/2024
+# Version: 2.1
+############################################################################################################
+
+
 # Logging function to improve visibility with log levels
 function Write-Log
 {
@@ -44,8 +52,7 @@ function Get-S2DData
     {
         # Retrieve virtual disk information from the correct namespace
         $virtualDisks = Get-CimInstance -CimSession $cimSession -Namespace "root/microsoft/windows/storage" -ClassName MSFT_VirtualDisk
-        Write-Log "Found $virtualDisks.count Virtual Disks"
-		foreach ($vDisk in $virtualDisks)
+        foreach ($vDisk in $virtualDisks)
         {
             $volume = Get-Volume -CimSession $cimSession | Where-Object FileSystemLabel -eq $vDisk.FriendlyName
             $s2dData.VirtualDisks += [pscustomobject]@{
@@ -75,7 +82,7 @@ function Get-S2DData
                 OperationalStatus = $pDisk.OperationalStatus
                 HealthStatus      = $pDisk.HealthStatus
                 Usage             = $pDisk.Usage
-                UsedCapacity      = if ($pDisk.AllocatedSize -ge 1TB) { "{0:N2} TB" -f ($pDisk.AllocatedSize / 1TB) } else { "{0:N2} GB" -f ($pDisk.AllocatedSize / 1GB) }
+                UsedCapacity      = $pDisk.AllocatedSize
                 Size              = if ($pDisk.Size -ge 1TB) { "{0:N2} TB" -f ($pDisk.Size / 1TB) } else { "{0:N2} GB" -f ($pDisk.Size / 1GB) }
             }
         }
@@ -109,7 +116,7 @@ catch
 # Retrieve clusters in the domain
 try
 {
-    $clusters = Get-Cluster -Domain $domain -Name HAWKHPV-MCP001
+    $clusters = Get-Cluster -Domain $domain -Name 999phcic001p010
     Write-Log "Clusters found: $($clusters.Count)"
 }
 catch
@@ -349,7 +356,7 @@ $clustersData = @{
 $clustersData.Timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
 
 # Export to JSON for dashboard usage
-$exportPath = "C:\SYSAdmin\ClusterInfo.json"
+$exportPath = "C:\SYSAdmin\PortalAggregator\AdminPortal-master\ClusterInfo.json"
 $clustersData | ConvertTo-Json -Depth 10 | Out-File -FilePath $exportPath -Encoding UTF8
 
 Write-Log "Cluster information exported to $exportPath in UTF-8 encoding"
